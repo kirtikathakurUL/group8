@@ -1,18 +1,19 @@
 package com.example.javaquizapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizFragment extends Fragment {
 
     private TextView questionTextView, timerTextView;
     private RadioGroup optionsRadioGroup;
@@ -66,59 +67,62 @@ public class QuizActivity extends AppCompatActivity {
             {"A) public", "B) private", "C) protected", "D) package-private"}
     };
 
-    private int[] answers = {1, 1, 1, 2, 2, 0, 1, 2, 0, 0, 0, 3, 1, 3, 1, 2, 1, 1, 0, 3}; //index of correct answers
+    private int[] answers = {1, 1, 1, 2, 2, 0, 1, 2, 0, 0, 0, 3, 1, 3, 1, 2, 1, 1, 0, 3}; // Index of correct answers
     private int currentQuestionIndex = 0;
     private int score = 0;
     private CountDownTimer timer;
-    private final long TIME_PER_QUESTION = 10000; /*10 seconds per question (change to 15 maybe if
-    needed*/
+    private final long TIME_PER_QUESTION = 10000; // 10 seconds per question
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_quiz, container, false);
 
-        //initialise views
-        questionTextView = findViewById(R.id.questionTextView);
-        timerTextView = findViewById(R.id.timerTextView);
-        timerProgressBar = findViewById(R.id.timerProgressBar);
-        optionsRadioGroup = findViewById(R.id.optionsRadioGroup);
-        option1 = findViewById(R.id.option1);
-        option2 = findViewById(R.id.option2);
-        option3 = findViewById(R.id.option3);
-        option4 = findViewById(R.id.option4);
-        nextButton = findViewById(R.id.nextButton);
+        // Initialize views
+        questionTextView = view.findViewById(R.id.questionTextView);
+        timerTextView = view.findViewById(R.id.timerTextView);
+        timerProgressBar = view.findViewById(R.id.timerProgressBar);
+        optionsRadioGroup = view.findViewById(R.id.optionsRadioGroup);
+        option1 = view.findViewById(R.id.option1);
+        option2 = view.findViewById(R.id.option2);
+        option3 = view.findViewById(R.id.option3);
+        option4 = view.findViewById(R.id.option4);
+        nextButton = view.findViewById(R.id.nextButton);
 
         loadQuestion();
 
-        //set click listener for the Next button
+        // Set click listener for the Next button
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //check if an option is selected
+                // Check if an option is selected
                 if (optionsRadioGroup.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(QuizActivity.this, "Please select an option", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please select an option", Toast.LENGTH_SHORT).show();
                 } else {
-                    //stops the timer
+                    // Stop the timer
                     if (timer != null) {
                         timer.cancel();
                     }
-                    //go to the next question
+                    // Go to the next question
                     currentQuestionIndex++;
                     if (currentQuestionIndex < questions.length) {
                         loadQuestion();
                     } else {
-                        finish();
+                        // End of quiz, navigate back to the menu or show results
+                        ((MainActivity) getActivity()).loadFragment(new MenuFragment());
                     }
                 }
             }
         });
+
+        return view;
     }
 
     private void loadQuestion() {
         questionTextView.setText(questions[currentQuestionIndex]);
 
-        //set the options
+        // Set the options
         option1.setText(options[currentQuestionIndex][0]);
         option2.setText(options[currentQuestionIndex][1]);
         option3.setText(options[currentQuestionIndex][2]);
@@ -126,7 +130,7 @@ public class QuizActivity extends AppCompatActivity {
 
         optionsRadioGroup.clearCheck();
 
-        //start the timer
+        // Start the timer
         startTimer();
     }
 
@@ -134,22 +138,22 @@ public class QuizActivity extends AppCompatActivity {
         timer = new CountDownTimer(TIME_PER_QUESTION, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                //update the timer text and progress bar
+                // Update the timer text and progress bar
                 int progress = (int) (millisUntilFinished / 1000);
                 timerTextView.setText(String.valueOf(progress));
-                timerProgressBar.setProgress(progress * 10); //progress bar is max 100
+                timerProgressBar.setProgress(progress * 10); // Progress bar is max 100
             }
 
             @Override
             public void onFinish() {
-                //time is over, go to the next question
+                // Time is over, go to the next question
                 timerTextView.setText("0");
                 currentQuestionIndex++;
                 if (currentQuestionIndex < questions.length) {
                     loadQuestion();
                 } else {
-                    //close activity at end of quiz
-                    finish();
+                    // End of quiz, navigate back to the menu or show results
+                    ((MainActivity) getActivity()).loadFragment(new MenuFragment());
                 }
             }
         }.start();

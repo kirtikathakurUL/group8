@@ -13,8 +13,9 @@
         android:theme="@style/Theme.JavaQuizApp"
         tools:targetApi="31">
 
+        <!-- MainActivity (or MainMenuActivity) is the only activity -->
         <activity
-            android:name=".MainMenuActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,12 +23,5 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".QuizActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".HighScoresActivity"
-            android:exported="false" />
     </application>
 </manifest>
