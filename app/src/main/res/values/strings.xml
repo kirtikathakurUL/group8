@@ -1,0 +1,8 @@
+<resources>
+<<<<<<< HEAD
+    <string name="app_name">JavaXpert</string>
+    <string name="app_logo">App Logo</string> <!-- Add this line -->
+=======
+    <string name="app_name">HelloWorldGroup8</string>
+>>>>>>> 0850e55af1d6435f12f864ea231ba6f47f612e26
+</resources>

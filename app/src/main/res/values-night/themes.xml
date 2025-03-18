@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+<<<<<<< HEAD
+    <style name="Base.Theme.JavaQuizApp" parent="Theme.Material3.DayNight.NoActionBar">
+=======
+    <style name="Base.Theme.HelloWorldGroup8" parent="Theme.Material3.DayNight.NoActionBar">
+>>>>>>> 0850e55af1d6435f12f864ea231ba6f47f612e26
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>
+</resources>
