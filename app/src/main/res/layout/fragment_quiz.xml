@@ -118,6 +118,7 @@
         android:padding="16dp" />
 
     <!-- Position the hint button below the Next button (kirtika)-->
+    <!-- checking for github-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
