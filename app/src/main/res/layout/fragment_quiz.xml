@@ -110,7 +110,7 @@
         android:layout_height="wrap_content"
         android:text="Next"
         android:textSize="18sp"
-        android:backgroundTint="@android:color/holo_purple"
+        android:backgroundTint="@color/orange"
         android:textColor="@color/white"
         android:layout_below="@id/questionCard"
         android:layout_centerHorizontal="true"
